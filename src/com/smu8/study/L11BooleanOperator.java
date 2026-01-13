@@ -2,7 +2,7 @@ package com.smu8.study;
 
 public class L11BooleanOperator {
     public static void main(String[] args) {
-        // 논리 연산자
+        // 비교 연산자
         // 같다 : ==
         // 같지않다 : !=
         // 크기를 비교하는 연산자 (값을 비교=>수[기본형]만가능)
