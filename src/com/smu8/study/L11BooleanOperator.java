@@ -63,6 +63,8 @@ public class L11BooleanOperator {
         //결과와 a는 몇일까요?
         System.out.println(a);
 
+        char ch='7';
+        System.out.println(ch>='0' && ch<='9' );
 
     }
 }

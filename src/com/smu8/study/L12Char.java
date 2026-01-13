@@ -19,7 +19,14 @@ public class L12Char {
         System.out.println(c);
         c='\uA9FC'; //ꧼ177117127
         System.out.println(c);
+        System.out.println((int)'가');
+        System.out.println(Integer.toHexString((int)'가'));
+        System.out.println((int)'0');
 
+        System.out.println(Short.MAX_VALUE); //32767
+        //66000
+        c=65000;
+        //c=-10;
 
     }
 }

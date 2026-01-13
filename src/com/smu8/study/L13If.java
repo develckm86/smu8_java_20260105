@@ -43,6 +43,73 @@ public class L13If {
         int age=0;
         msg=""; // 만 19세 이상은 주류구입가능,19세 미만은 주류구입불가
 
+        if(year-birth>=19){
+            msg="주류구입가능";
+        }else{
+            msg="주류구입불가능";
+        }
+        //2-6 정수 n이 짝수이면 “짝수”,
+        // 홀수이면 "홀수"를 출력하는 조건문을 작성하시오.
+        int n=7777;
+        msg="";
+        if(n%2==0){
+            msg="n은 짝수";
+        }else {
+            msg="n은 홀수";
+        }
+        int score=88;
+        msg="";
+        if(score>=90){
+            msg="score가 우수";
+        }else if(score>=70){
+            msg="score가 보통";
+        }else {
+            msg="score가 미흡";
+        }
+        System.out.println(msg);
+
+
+        int month=3; //월
+        msg="";
+        if(month>=3 && month<=5){
+            msg="봄";
+        }else if(month>=6 && month<=8){
+            msg="여름";
+        }else if(month>=9 && month<=11){
+            msg="가을";
+        }else if(month==1 || month==2 || month==12){
+            msg="겨울";
+        }
+        System.out.println(msg);
+        msg="";
+        //month 1~12
+        if(month>=1 && month<=12){
+            if(month>=3 && month<=5){
+                msg="봄";
+            }else if(month>=6 && month<=8){
+                msg="여름";
+            }else if(month>=9 && month<=11){
+                msg="가을";
+            }else{
+                msg="겨울";
+            }
+        }else {
+            msg="month은 1~12월까지 입니다.";
+        }
+
+
+        char ch='C';
+        //65~
+        //97~
+        msg="";
+        if(ch>='A' && ch<='Z'){
+            msg="대문자";
+        }else if(ch>='a' && ch<='z'){
+            msg="소문자";
+        }else {
+            msg="알파벳이 아닙니다!";
+        }
+        System.out.println(msg);
 
 
 
