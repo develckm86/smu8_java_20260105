@@ -1,6 +1,7 @@
 package com.smu8.ex;
 
 import java.util.Random;
+import java.util.Scanner;
 
 public class L03RockPaperScissors {
     public static void main(String[] args) {
@@ -14,9 +15,39 @@ public class L03RockPaperScissors {
         // 5-2. 유저의 입력이 컴퓨터의 입력을 이기면(바위 1 vs 가위 0) Win
         // 5-3. 유저의 입력이 컴퓨터의 입력을 지면(가위 0 vs 바위 1) Lose
         //
+        final int SCISSORS=0;
+        final int ROCK=1;
+        final int PAPER=2;
+        int randomNum= new Random().nextInt(0,3); //0~2까지
         System.out.println("가위 바위 보 게임입니다. 3번이겨야 게임을 종료합니다.");
-        int random= new Random().nextInt(0,3); //0~2까지
-        System.out.println(random);
+        Scanner scanner=new Scanner(System.in);//콘솔에서 유저의 입력을 받겠다.
+        System.out.print("가위=0 바위=1 보=2 중 한개를 입력 :");
+        int inputNum=scanner.nextInt();
+        String inputStr=switch (inputNum){
+            case ROCK -> "바위";
+            case SCISSORS -> "가위";
+            case PAPER -> "보";
+            default -> throw new IllegalStateException("오류 발생 게임종료! 수는 0~2까지만 입력가능");
+        };
+        String randomStr=switch (randomNum){
+            case ROCK -> "바위";
+            case SCISSORS -> "가위";
+            case PAPER -> "보";
+            default -> throw new IllegalStateException("오류 발생 게임종료! 수는 0~2외의 수가 나옴");
+        };
+
+        System.out.println(inputStr+" VS "+randomStr);
+        if(inputNum==randomNum){
+            System.out.println("비김");
+        }else {
+            int result=inputNum-randomNum;
+            if(result==1 || result ==-2 ){
+                System.out.println("Win");
+            }else{
+                System.out.println("Lose");
+            }
+        }
+
 
     }
 }
