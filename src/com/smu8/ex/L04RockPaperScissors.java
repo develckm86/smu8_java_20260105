@@ -26,9 +26,11 @@ public class L04RockPaperScissors {
         while (userWinCnt<3 && computerWinCnt<3){ //유저나 컴퓨터가 3번 이길때까지
 
             int randomNum= new Random().nextInt(0,3); //0~2까지
+
             Scanner scanner=new Scanner(System.in);//콘솔에서 유저의 입력을 받겠다.
             System.out.print("가위=0 바위=1 보=2 중 한개를 입력 :");
             int inputNum=scanner.nextInt();
+
             String inputStr=switch (inputNum){
                 case ROCK -> "바위";
                 case SCISSORS -> "가위";
@@ -56,6 +58,7 @@ public class L04RockPaperScissors {
                 }
             }
         }
+
         String msg=(userWinCnt==3)?"유저 승리":"컴퓨터 승리";
         System.out.println(msg);
 
