@@ -8,25 +8,30 @@ public class L06BlackJack {
     //점수 계산함수
     public static int setScore(String []deckArr){
         int sum = 0;
+
+        int aCnt=0; //A를 제일 마지막에 계산하기 위해 수를 셈
+        // 1=>11, 10, 1  : 22
+        // 10, 1, 1  : 12
+        //
         for (int i = 0; i < deckArr.length; i++) {
             String card=deckArr[i];
             if(card==null) break;
             String [] cardArr=card.split("_"); //♣_13 => {"♣","13"}
             int num=Integer.parseInt(cardArr[1]);//"13"=>13
-            if(num==1){ //카드 A 는 1점 OR 11점
-                if(sum+11<=21){ //11점으로 취급했을시 21점을 넘으면 1점 취금
-                    sum+=11;
-                }else {
-                    sum+=1;
-                }
+            if(num==1){ //카드 A 는 1점 OR 11점이지만 우선 1점으로 취급
+                aCnt++;
+                sum+=1;
             } else if (num>10) { //J 11,Q 12,K 13 모두 10점
                 sum+=10;
             }else {
                 sum+=num;
             }
         }
+        //총합에 따라 A를 1 or 11 로 결정, 한개만 11로 사용 가능
+        if(sum<=11 && aCnt>0){ //A가 1개라도 있고 A를 1로 취급하고 더한 값이 11보다 작거나 같으면 A를 11로 취급함
+            sum+=10; //이미 A를 1로 사용했었으니 11을 더함
+        }
         return sum;
-
     }
 
     public static void main(String[] args) {
@@ -83,7 +88,6 @@ public class L06BlackJack {
             String[] userDeckArr=new String[11];
             String[] dealerDeckArr=new String[11];
             Random random=new Random();
-            int cnt=0;
 
             //카드 셔플
             for (int i = 0; i < deckArr.length; i++) {
@@ -96,12 +100,14 @@ public class L06BlackJack {
                     }
                 }
             }
+
             System.out.println("셔플된 카드 : "+Arrays.toString(shuffleDeckArr));
             //최초 유저와 딜러는 카드 2개씩가짐
-            userDeckArr[0]=shuffleDeckArr[0];
-            dealerDeckArr[0]=shuffleDeckArr[1];
-            userDeckArr[1]=shuffleDeckArr[2];
-            dealerDeckArr[1]=shuffleDeckArr[3];
+            int shuffleIndex=0;
+            userDeckArr[0]=shuffleDeckArr[shuffleIndex++];
+            dealerDeckArr[0]=shuffleDeckArr[shuffleIndex++];
+            userDeckArr[1]=shuffleDeckArr[shuffleIndex++];
+            dealerDeckArr[1]=shuffleDeckArr[shuffleIndex++];
             System.out.println("현재 유저 덱 :"+Arrays.toString(userDeckArr));
             System.out.println("현재 딜러 덱 :"+Arrays.toString(dealerDeckArr));
             int userSum=setScore(userDeckArr);
@@ -116,7 +122,7 @@ public class L06BlackJack {
                 System.out.println("딜러승리");
                 break;
             }
-            int shuffleIndex=4; //최초 유저와 딜러가 2개씩 나눔
+            //최초 유저와 딜러가 2개씩 나눔
             while (true){
 
                 System.out.print("다음 중 입력, Hit=0, Stand=1, Exit=2:");
@@ -127,9 +133,8 @@ public class L06BlackJack {
                 }else if(input==0){ //카드 1장씩 받기
                     //4/2=2
                     //5/2=2
-                    userDeckArr[shuffleIndex/2]=shuffleDeckArr[shuffleIndex]; //셔플된 카드의 다음카드를 유저에게
-                    ++shuffleIndex;
-                    dealerDeckArr[shuffleIndex/2]=shuffleDeckArr[shuffleIndex]; //셔플된 카드의 다음카드를 딜러에게
+                    userDeckArr[shuffleIndex/2]=shuffleDeckArr[++shuffleIndex]; //셔플된 카드의 다음카드를 유저에게
+                    dealerDeckArr[shuffleIndex/2]=shuffleDeckArr[++shuffleIndex]; //셔플된 카드의 다음카드를 딜러에게
                     System.out.println("현재 유저 덱 :"+Arrays.toString(userDeckArr));
                     System.out.println("현재 딜러 덱 :"+Arrays.toString(dealerDeckArr));
                     userSum=setScore(userDeckArr);
@@ -157,7 +162,6 @@ public class L06BlackJack {
                     }
                     break game;
                 }
-
 
             }
 
