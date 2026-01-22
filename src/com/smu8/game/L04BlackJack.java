@@ -1,0 +1,38 @@
+package com.smu8.game;
+
+import java.util.Arrays;
+import java.util.Random;
+
+public class L04BlackJack {
+    public static void main(String[] args) {
+        Random random=new Random();
+        int [] numArr={11,22,33,44,55,66};
+        for (int i=0; i<numArr.length; i++){
+            int num=numArr[i];
+            int randomIndex=random.nextInt(numArr.length);
+            int randomNum=numArr[randomIndex];
+            //System.out.println(num+","+randomNum);
+            numArr[i]=randomNum;
+            numArr[randomIndex]=num;
+        }
+        System.out.println(Arrays.toString(numArr));
+
+        String[] deckArr = {
+                "♠_1","♠_2","♠_3","♠_4","♠_5","♠_6","♠_7","♠_8","♠_9","♠_10","♠_11","♠_12","♠_13",
+                "♥_1","♥_2","♥_3","♥_4","♥_5","♥_6","♥_7","♥_8","♥_9","♥_10","♥_11","♥_12","♥_13",
+                "♦_1","♦_2","♦_3","♦_4","♦_5","♦_6","♦_7","♦_8","♦_9","♦_10","♦_11","♦_12","♦_13",
+                "♣_1","♣_2","♣_3","♣_4","♣_5","♣_6","♣_7","♣_8","♣_9","♣_10","♣_11","♣_12","♣_13"
+        };//52개 0~51
+
+        for(int i=0; i<deckArr.length; i++){
+            String card=deckArr[i];
+            int radomNum=random.nextInt(deckArr.length);
+            String randomCard=deckArr[radomNum];
+            deckArr[i]=randomCard;
+            deckArr[radomNum]=card;
+        }
+        System.out.println(Arrays.toString(deckArr));
+
+
+    }
+}
