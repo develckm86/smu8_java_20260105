@@ -8,9 +8,7 @@ class Student{
     //this
     //toString() : 클래스를 만들면 자동으로 존재, 객체를 설명
     //대부분 개발툴에서 toString 자동완성을 지원
-
     public Student(){} //기본생성자 new Student()
-
     public Student(int id,int birth,String name){
         this.id=id;
         this.birth=birth;
@@ -34,7 +32,6 @@ public class L06Constructor {
         s.name="철수";
         s.birth=2000;
         s.id=1234;
-        System.out.println(s); //자동으로 toString ()
         //객체 성멸의 기본값 : 타입+저장된 메모리 위치  => 필드로 바꿀수 있다.
         //toString 기본값: com.smu8.oop.Student@5f184fc6
         //toString 변경 : Student{id=0, birth=0, name='null', email='null'}
