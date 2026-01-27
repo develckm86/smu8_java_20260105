@@ -18,6 +18,7 @@ class StaticObjectTest{
     static void set(){
         //a++;
         //this.a++;
+        new StaticObjectTest().a++;
         count++;
         //this.count++;
         //static 으로 선언된 필드와 메소드는 실행될때 데이터로 만들어짐 => 클래스멤버

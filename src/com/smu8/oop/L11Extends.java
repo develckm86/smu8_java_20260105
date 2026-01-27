@@ -7,7 +7,9 @@ class A{
         System.out.println(this.x);
     }
 }
-class B extends A{}
+class B extends A{
+
+}
 
 public class L11Extends {
     public static void main(String[] args) {
