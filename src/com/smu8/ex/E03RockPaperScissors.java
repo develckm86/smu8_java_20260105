@@ -3,7 +3,7 @@ package com.smu8.ex;
 import java.util.Random;
 import java.util.Scanner;
 
-public class L03RockPaperScissors {
+public class E03RockPaperScissors {
     public static void main(String[] args) {
         // 컴퓨터와 진행하는 가위바위보 게임
         // 1. 가위=0, 바위=1, 보=2 로 하기로 약속한다.

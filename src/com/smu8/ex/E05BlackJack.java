@@ -3,7 +3,7 @@ package com.smu8.ex;
 import java.util.Arrays;
 import java.util.Random;
 
-public class L05BlackJack {
+public class E05BlackJack {
     //점수 계산함수
     public static int setScore(String []deckArr){
         int sum = 0;

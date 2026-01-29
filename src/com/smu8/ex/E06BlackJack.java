@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.Random;
 import java.util.Scanner;
 
-public class L06BlackJack {
+public class E06BlackJack {
     //점수 계산함수
     public static int setScore(String []deckArr){
         int sum = 0;
