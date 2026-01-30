@@ -4,10 +4,10 @@ import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
 
-public class E07_LayoutGallery {
+public class E07LayoutGallery {
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(E07_LayoutGallery::createAndShow);
+        SwingUtilities.invokeLater(E07LayoutGallery::createAndShow);
     }
 
     private static void createAndShow() {

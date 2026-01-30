@@ -35,11 +35,6 @@ class Circle extends Shape{
 }
 public class H12AbstractClass {
     public static void main(String[] args) {
-//        Shape circle=new Circle(7);
-//        System.out.println(circle.area());
-//        Circle circle2=(Circle) circle;
-//        circle2.setRadius(9);
-//        System.out.println(circle2.area());
         Circle circle=new Circle(10);
         Circle circle2=new Circle(12);
         Circle circle3=new Circle(14);
@@ -53,7 +48,5 @@ public class H12AbstractClass {
         for (int i=0; i<shapeArr.length; i++){
             System.out.println(shapeArr[i].getClass()+":"+shapeArr[i].area());
         }
-
-
     }
 }

@@ -6,10 +6,10 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ItemEvent;
 
-public class E08_SwingAllComponentsDemo {
+public class E08SwingAllComponentsDemo {
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(E08_SwingAllComponentsDemo::createAndShow);
+        SwingUtilities.invokeLater(E08SwingAllComponentsDemo::createAndShow);
     }
 
     private static void createAndShow() {
