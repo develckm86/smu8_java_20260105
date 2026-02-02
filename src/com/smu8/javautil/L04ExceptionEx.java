@@ -1,10 +1,25 @@
 package com.smu8.javautil;
 
+import java.time.LocalDate;
 import java.util.Scanner;
 
 public class L04ExceptionEx {
-    public static int parseAge(String birth){
+    public static int parseAge(String birth) throws Exception{
+        //일반적인경우 : throws NumberFormatException,IllegalArgumentException
         int age=0;
+        LocalDate now=LocalDate.now();
+        int year=now.getYear();
+        try {
+            int birthInt=Integer.parseInt(birth);
+            if(birthInt<1900 || birthInt>year) throw new IllegalArgumentException("태어난 해는 1900~"+year);
+            age=year-birthInt;
+        }catch (NumberFormatException e){
+            throw new Exception("태어난 해는 수만 입력");
+        }catch (IllegalArgumentException e){
+            throw new Exception(e.getMessage());
+        }
+        //오류가 없이 실행된다면...
+        //age= year-b
         return age;
     }
     public static void main(String[] args) {
@@ -14,7 +29,16 @@ public class L04ExceptionEx {
         while (true){
             System.out.print("당신의 태어난 해(19**,20**):");
             String birthStr=scanner.next();
-            int year=2026;
+
+            try {
+                int age=parseAge(birthStr);
+                System.out.println("당신의 나이는 "+age);
+            } catch (Exception e) {
+                System.out.println("오류:"+e.getMessage());
+            }
+
+            //int year= LocalDate.now().getYear(); //2026
+            /*
             try {
                 int birth=Integer.parseInt(birthStr);
                 if(birth<1900 || birth>year) throw new IllegalArgumentException("태어난 해는 1900~"+year);
@@ -24,6 +48,7 @@ public class L04ExceptionEx {
             }catch (IllegalArgumentException e){
                 System.out.println("입력오류 :"+e.getMessage());
             }
+            */
         }
     }
 }
