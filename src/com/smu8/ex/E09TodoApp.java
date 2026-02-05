@@ -2,6 +2,8 @@ package com.smu8.ex;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -75,7 +77,14 @@ public class E09TodoApp extends JFrame {
         add(bottom, BorderLayout.SOUTH);
 
         // 이벤트 연결
-        addButton.addActionListener(e -> addTask());
+        //addButton.addActionListener(e -> addTask());
+        addButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                addTask();
+            }
+        });
+
         inputField.addActionListener(e -> addTask());
 
         toggleDoneButton.addActionListener(e -> toggleDone());
