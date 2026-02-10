@@ -46,7 +46,19 @@ public class L27Clock {
         //System.out.println("스레드가 2개면 실행됨");
         Thread thermo =new Thread(new Thermo());
         thermo.start();
-        Thread hygro =new Thread(()->hygro());
+
+        /*
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                hygro();
+            }
+        }).start();
+        */
+        Thread hygro =new Thread(()->{
+            hygro();
+        });
+
         hygro.start();
         /*
         while (true){ //Thread 클래스를 재정의
