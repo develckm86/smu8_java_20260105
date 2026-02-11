@@ -32,15 +32,20 @@ public class E12SocketServerChat {
             while (true){
                 String msg=scanner.nextLine();
                 String userIp=client.getInetAddress().getHostAddress();
-                clients.stream().forEach((c)->{
+
+                List<Socket> closeClients=new ArrayList<>(); //닫힌 소켓 모음
+                clients.stream()
+                        .forEach((c)->{
                     try {//메세지 보내면서 auto close를 하면 소켓 연결이 끊어짐 주의!!
                         PrintWriter printWriter=new PrintWriter(c.getOutputStream());
                         printWriter.println(userIp+" : "+msg);
                         printWriter.flush();
-                    } catch (IOException e) {
+                    } catch (IOException e) {//접속한 클라이언크가 문제가 있음
+                        closeClients.add(c); //문제가 있는 클라이언트 모음
                         e.printStackTrace();
                     }
                 });
+                clients.removeAll(closeClients);
             }
         } catch (IOException e) {
             e.printStackTrace();
