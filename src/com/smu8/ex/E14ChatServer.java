@@ -99,7 +99,7 @@ public class E14ChatServer {
                 if (line.isBlank()) continue;
 
                 // 종료 명령
-                if (line.equalsIgnoreCase("/quit")) break;
+                if (line.equalsIgnoreCase("quit")) break;
 
                 // 일반 채팅 브로드캐스트
                 broadcast(client.nickname + " : " + line);
