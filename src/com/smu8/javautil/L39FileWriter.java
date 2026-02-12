@@ -10,13 +10,13 @@ public class L39FileWriter {
         try (
                 //   / : root (c:\)
                 //  ./  : 현재경로글 기준  jvm 이 실행하는 프로젝트 경로
-                FileOutputStream fos=new FileOutputStream("out.txt");
+                FileOutputStream fos=new FileOutputStream("out2.txt");
                 OutputStreamWriter osw=new OutputStreamWriter(fos); //문자단위로 바이트를 처리
                 BufferedWriter bw=new BufferedWriter(osw); //버퍼로 문자열을 처리
                 ){
                 bw.write("안녕하세요!");
                 bw.newLine();
-                bw.write("파일 출력 수업입니다.");
+                bw.write("파일 출력 수업입니다.~~~~");
                 bw.newLine();
                 bw.write("writer 는 바이트를 인코딩처리\n");
                 bw.write("버퍼는 임시저장공간으로 \n라인개행전까지 문자열을 처리 \n");

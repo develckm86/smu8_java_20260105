@@ -17,9 +17,11 @@ public class L34Reader {
             String str="";
             while (true){
                 int word=isr.read();
+                System.out.print(word+" ");
                 str+=(char)word;
                 if(word=='\n')break; // 통신의 끝에는 항상 -1 (11111111)
             }
+            System.out.println();
             System.out.printf("입력한 문자열 : "+str);
         }catch (IOException e){
             e.printStackTrace();
