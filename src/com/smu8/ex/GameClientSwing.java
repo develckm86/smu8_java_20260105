@@ -143,7 +143,7 @@ public class GameClientSwing extends JFrame {
             return;
         }
 
-        String portStr = JOptionPane.showInputDialog(this, "포트", "7000");
+        String portStr = JOptionPane.showInputDialog(this, "포트", "7777");
         if (portStr == null) {
             dispose();
             return;

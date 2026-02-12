@@ -34,7 +34,7 @@ public class GameSocketServer {
     private final Random random = new Random();
 
     public static void main(String[] args) throws Exception {
-        new GameSocketServer().start(7000);
+        new GameSocketServer().start(7777);
     }
 
     public void start(int port) throws Exception {
