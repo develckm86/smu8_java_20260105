@@ -19,7 +19,7 @@ import java.util.Random;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public class GameSocketServer {
+public class E16GameSocketServer {
 
     public static final int WORLD_WIDTH = 900;
     public static final int WORLD_HEIGHT = 620;
@@ -41,7 +41,7 @@ public class GameSocketServer {
     private final Random random = new Random();
 
     public static void main(String[] args) throws Exception {
-        new GameSocketServer().start(7777);
+        new E16GameSocketServer().start(7777);
     }
 
     public void start(int port) throws Exception {

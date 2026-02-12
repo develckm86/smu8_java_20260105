@@ -35,7 +35,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-public class GameClientSwing extends JFrame {
+public class E17GameClientSwing extends JFrame {
 
     private static final String USERS_PREFIX = "@USERS ";
     private static final String STATE_PREFIX = "@STATE ";
@@ -57,10 +57,10 @@ public class GameClientSwing extends JFrame {
     private String facingDirection = "UP";
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> new GameClientSwing().setVisible(true));
+        SwingUtilities.invokeLater(() -> new E17GameClientSwing().setVisible(true));
     }
 
-    public GameClientSwing() {
+    public E17GameClientSwing() {
         setTitle("Socket Paint Game");
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setSize(1180, 760);
@@ -78,7 +78,7 @@ public class GameClientSwing extends JFrame {
     }
 
     private void initUI() {
-        gamePanel.setPreferredSize(new Dimension(GameSocketServer.WORLD_WIDTH, GameSocketServer.WORLD_HEIGHT));
+        gamePanel.setPreferredSize(new Dimension(E16GameSocketServer.WORLD_WIDTH, E16GameSocketServer.WORLD_HEIGHT));
         gamePanel.setBackground(new Color(243, 247, 252));
         gamePanel.setFocusable(true);
 
@@ -367,7 +367,7 @@ public class GameClientSwing extends JFrame {
         }
 
         private void drawMissile(Graphics2D g2, MissileView missile) {
-            int r = GameSocketServer.MISSILE_RADIUS;
+            int r = E16GameSocketServer.MISSILE_RADIUS;
             int d = r * 2;
             g2.setColor(missile.color);
             g2.fillOval(missile.x - r, missile.y - r, d, d);
@@ -377,7 +377,7 @@ public class GameClientSwing extends JFrame {
         }
 
         private void drawPlayer(Graphics2D g2, PlayerView player) {
-            int r = GameSocketServer.PLAYER_RADIUS;
+            int r = E16GameSocketServer.PLAYER_RADIUS;
             int d = r * 2;
 
             g2.setColor(player.color);
