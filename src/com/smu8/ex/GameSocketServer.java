@@ -32,6 +32,7 @@ public class GameSocketServer {
     private static final String STATE_PREFIX = "@STATE ";
     private static final String MISSILES_PREFIX = "@MISSILES ";
     private static final String MOVE_PREFIX = "MOVE ";
+    private static final String LOOK_PREFIX = "LOOK ";
     private static final String FIRE_CMD = "FIRE";
     private static final long GAME_TICK_MS = 33L;
     private static final long MISSILE_COOLDOWN_MS = 220L;
@@ -91,6 +92,11 @@ public class GameSocketServer {
                     continue;
                 }
 
+                if (cmd.regionMatches(true, 0, LOOK_PREFIX, 0, LOOK_PREFIX.length())) {
+                    look(client, cmd.substring(LOOK_PREFIX.length()).trim());
+                    continue;
+                }
+
                 if (cmd.equalsIgnoreCase(FIRE_CMD)) {
                     fire(client, "");
                     continue;
@@ -123,7 +129,6 @@ public class GameSocketServer {
         synchronized (clients) {
             int nextX = client.x;
             int nextY = client.y;
-            client.lastDirection = direction;
 
             switch (direction) {
                 case "UP" -> nextY -= STEP;
@@ -139,6 +144,20 @@ public class GameSocketServer {
             client.y = clamp(nextY, PLAYER_RADIUS, WORLD_HEIGHT - PLAYER_RADIUS);
         }
         broadcastState();
+    }
+
+    private void look(PlayerClient client, String directionRaw) {
+        String direction = normalizeDirection(directionRaw);
+        if (direction == null) return;
+
+        boolean changed = false;
+        synchronized (clients) {
+            if (!direction.equals(client.lastDirection)) {
+                client.lastDirection = direction;
+                changed = true;
+            }
+        }
+        if (changed) broadcastState();
     }
 
     private void fire(PlayerClient client, String directionRaw) {
@@ -292,7 +311,7 @@ public class GameSocketServer {
         synchronized (clients) {
             line = STATE_PREFIX + clients.stream()
                     .sorted(Comparator.comparing(c -> c.nickname))
-                    .map(c -> c.nickname + "," + c.x + "," + c.y + "," + c.colorHex + "," + c.kills + "," + c.deaths)
+                    .map(c -> c.nickname + "," + c.x + "," + c.y + "," + c.colorHex + "," + c.kills + "," + c.deaths + "," + c.lastDirection)
                     .collect(Collectors.joining("|"));
         }
         broadcast(line);

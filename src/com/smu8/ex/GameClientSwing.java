@@ -42,6 +42,7 @@ public class GameClientSwing extends JFrame {
     private static final String MISSILES_PREFIX = "@MISSILES ";
 
     private final GamePanel gamePanel = new GamePanel();
+    private JScrollPane gameScroll;
     private final DefaultListModel<String> userListModel = new DefaultListModel<>();
     private final JList<String> userList = new JList<>(userListModel);
     private final JTextArea logArea = new JTextArea();
@@ -98,15 +99,12 @@ public class GameClientSwing extends JFrame {
         sideSplit.setDividerSize(6);
         sideSplit.setPreferredSize(new Dimension(260, 0));
 
-        JSplitPane mainSplit = new JSplitPane(
-                JSplitPane.HORIZONTAL_SPLIT,
-                new JScrollPane(gamePanel),
-                sideSplit
-        );
+        gameScroll = new JScrollPane(gamePanel);
+        JSplitPane mainSplit = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, gameScroll, sideSplit);
         mainSplit.setResizeWeight(0.78);
         mainSplit.setDividerSize(7);
 
-        JTextArea guide = new JTextArea("방향키/WASD 이동, SPACE 미사일 발사(현재 바라보는 방향)");
+        JTextArea guide = new JTextArea("WASD 이동, 방향키 시선 변경, SPACE 미사일 발사");
         guide.setEditable(false);
         guide.setBackground(new Color(246, 249, 255));
         guide.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 12));
@@ -120,14 +118,14 @@ public class GameClientSwing extends JFrame {
     }
 
     private void initKeyBindings() {
-        bindMove("UP", "UP");
-        bindMove("DOWN", "DOWN");
-        bindMove("LEFT", "LEFT");
-        bindMove("RIGHT", "RIGHT");
         bindMove("W", "UP");
         bindMove("S", "DOWN");
         bindMove("A", "LEFT");
         bindMove("D", "RIGHT");
+        bindLook("UP", "UP");
+        bindLook("DOWN", "DOWN");
+        bindLook("LEFT", "LEFT");
+        bindLook("RIGHT", "RIGHT");
         bindFire("SPACE");
         bindFire("ENTER");
     }
@@ -152,6 +150,30 @@ public class GameClientSwing extends JFrame {
                 sendFire();
             }
         });
+    }
+
+    private void bindLook(String key, String direction) {
+        KeyStroke stroke = KeyStroke.getKeyStroke(key);
+        if (stroke == null) return;
+
+        AbstractAction action = new AbstractAction() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                sendLook(direction);
+            }
+        };
+
+        String panelActionId = "look_panel_" + key;
+        gamePanel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(stroke, panelActionId);
+        gamePanel.getActionMap().put(panelActionId, action);
+
+        String scrollActionId = "look_scroll_" + key;
+        gameScroll.getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT).put(stroke, scrollActionId);
+        gameScroll.getActionMap().put(scrollActionId, action);
+
+        String rootActionId = "look_root_" + key;
+        getRootPane().getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(stroke, rootActionId);
+        getRootPane().getActionMap().put(rootActionId, action);
     }
 
     private void connectFlow() {
@@ -259,7 +281,7 @@ public class GameClientSwing extends JFrame {
         if (!payload.isBlank()) {
             String[] chunks = payload.split("\\|");
             for (String chunk : chunks) {
-                String[] data = chunk.split(",", 6);
+                String[] data = chunk.split(",", 7);
                 if (data.length < 6) continue;
                 String nick = data[0].trim();
                 if (nick.isBlank()) continue;
@@ -270,7 +292,12 @@ public class GameClientSwing extends JFrame {
                     Color color = Color.decode(data[3].trim());
                     int kills = Integer.parseInt(data[4].trim());
                     int deaths = Integer.parseInt(data[5].trim());
-                    players.put(nick, new PlayerView(nick, x, y, color, kills, deaths));
+                    String direction = data.length >= 7 ? normalizeDirection(data[6].trim()) : null;
+                    if (direction == null) {
+                        direction = nick.equals(myNickname) ? facingDirection : "UP";
+                    }
+                    players.put(nick, new PlayerView(nick, x, y, color, kills, deaths, direction));
+                    if (nick.equals(myNickname)) facingDirection = direction;
                 } catch (Exception ignored) {
                 }
             }
@@ -302,8 +329,15 @@ public class GameClientSwing extends JFrame {
         if (!running || out == null) return;
         String normalized = normalizeDirection(direction);
         if (normalized == null) return;
-        facingDirection = normalized;
         out.println("MOVE " + normalized);
+    }
+
+    private void sendLook(String direction) {
+        if (!running || out == null) return;
+        String normalized = normalizeDirection(direction);
+        if (normalized == null) return;
+        facingDirection = normalized;
+        out.println("LOOK " + normalized);
     }
 
     private void sendFire() {
@@ -382,6 +416,7 @@ public class GameClientSwing extends JFrame {
 
             g2.setColor(player.color);
             g2.fillOval(player.x - r, player.y - r, d, d);
+            drawEyes(g2, player, r);
 
             if (player.nickname.equals(myNickname)) {
                 g2.setStroke(new BasicStroke(3f));
@@ -393,6 +428,41 @@ public class GameClientSwing extends JFrame {
             g2.setFont(new Font(Font.MONOSPACED, Font.BOLD, 12));
             g2.drawString(player.nickname + " K:" + player.kills + " D:" + player.deaths, player.x - r, player.y - r - 6);
         }
+
+        private void drawEyes(Graphics2D g2, PlayerView player, int radius) {
+            int fx = 0;
+            int fy = -1;
+            switch (player.facingDirection) {
+                case "DOWN" -> fy = 1;
+                case "LEFT" -> {
+                    fx = -1;
+                    fy = 0;
+                }
+                case "RIGHT" -> {
+                    fx = 1;
+                    fy = 0;
+                }
+                default -> {
+                }
+            }
+
+            float forward = radius * 0.35f;
+            float side = radius * 0.28f;
+            float px = -fy;
+            float py = fx;
+            float baseX = player.x + (fx * forward);
+            float baseY = player.y + (fy * forward);
+
+            int eyeRadius = 2;
+            int leftX = Math.round(baseX + (px * side));
+            int leftY = Math.round(baseY + (py * side));
+            int rightX = Math.round(baseX - (px * side));
+            int rightY = Math.round(baseY - (py * side));
+
+            g2.setColor(Color.BLACK);
+            g2.fillOval(leftX - eyeRadius, leftY - eyeRadius, eyeRadius * 2, eyeRadius * 2);
+            g2.fillOval(rightX - eyeRadius, rightY - eyeRadius, eyeRadius * 2, eyeRadius * 2);
+        }
     }
 
     private static final class PlayerView {
@@ -402,14 +472,16 @@ public class GameClientSwing extends JFrame {
         final Color color;
         final int kills;
         final int deaths;
+        final String facingDirection;
 
-        PlayerView(String nickname, int x, int y, Color color, int kills, int deaths) {
+        PlayerView(String nickname, int x, int y, Color color, int kills, int deaths, String facingDirection) {
             this.nickname = nickname;
             this.x = x;
             this.y = y;
             this.color = color;
             this.kills = kills;
             this.deaths = deaths;
+            this.facingDirection = facingDirection;
         }
     }
 
