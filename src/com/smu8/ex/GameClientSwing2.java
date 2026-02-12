@@ -1,33 +1,10 @@
 package com.smu8.ex;
 
-import javax.swing.AbstractAction;
-import javax.swing.BorderFactory;
-import javax.swing.DefaultListModel;
-import javax.swing.JFrame;
-import javax.swing.JComponent;
-import javax.swing.JList;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JSplitPane;
-import javax.swing.JTextArea;
-import javax.swing.KeyStroke;
-import javax.swing.SwingUtilities;
-import java.awt.BasicStroke;
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.RenderingHints;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
+import java.io.*;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -35,7 +12,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-public class GameClientSwing extends JFrame {
+public class GameClientSwing2 extends JFrame {
 
     private static final String USERS_PREFIX = "@USERS ";
     private static final String STATE_PREFIX = "@STATE ";
@@ -57,10 +34,10 @@ public class GameClientSwing extends JFrame {
     private String facingDirection = "UP";
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> new GameClientSwing().setVisible(true));
+        SwingUtilities.invokeLater(() -> new GameClientSwing2().setVisible(true));
     }
 
-    public GameClientSwing() {
+    public GameClientSwing2() {
         setTitle("Socket Paint Game");
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setSize(1180, 760);
