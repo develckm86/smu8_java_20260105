@@ -5,17 +5,31 @@ import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.Scanner;
 
 public class L45SocketClient {
     public static void main(String[] args) {
         //서버에 접속
         //String ip="127.0.0.1"; //내컴퓨터에 실행중인 서버에 접속
         String ip="192.168.0.65"; //내컴퓨터에 실행중인 서버에 접속
+        String username="경민코딩";
         int port=7777;
         try (Socket socket=new Socket(ip,port)){
-            OutputStream out=socket.getOutputStream();
-            PrintWriter print=new PrintWriter(out,true);
-            print.println("경민 안녕!!!");
+            PrintWriter out=new PrintWriter(socket.getOutputStream(),true);
+            Scanner msgIn=new Scanner(System.in);
+            Thread msgOutThread=new Thread(()->{
+                while (true){
+                    String msg=msgIn.nextLine(); //콘솔에 입력한 채팅 메세지
+                    out.println(username+":"+msg);
+                }
+            });
+            msgOutThread.start();
+            Scanner in=new Scanner(socket.getInputStream());
+            while (in.hasNext()){
+                String msg=in.nextLine();
+                System.out.println(msg);
+            }
+
 
         } catch (UnknownHostException e) {
             throw new RuntimeException(e);
