@@ -77,7 +77,6 @@ class ChattingServer{
     }
 }
 
-
 public class L46SocketServerObj {
     public static void main(String[] args) {
         try {
