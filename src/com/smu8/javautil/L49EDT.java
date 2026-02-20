@@ -16,6 +16,7 @@ public class L49EDT {
         btn.addActionListener((event)->{
             //ActionEvent event : 이벤트 정보 (어디서, 누가, 어떤 ..)
             try {
+                label.setText("바뀜");
                 Thread.sleep(3000);
                 //EDT가 윈도우에서 발생하는 모든 이벤트를 총괄
                 //3초간 모든 윈도우 이벤트가 발생하지 않음
@@ -23,7 +24,6 @@ public class L49EDT {
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
-            label.setText("안녕!!!");
         });
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

@@ -29,9 +29,10 @@ public class L50Timer extends JFrame {
 //                }
 //            }).start();
             //Timer EDT 가 주기가 있는 반복실행
+            if(timer!=null) return;
             timer=new Timer(1000,(e)->{ ///Thread.sleep(1000)
                 label.setText(--time+""); //invokeLater 생략가능!!(해당 스레드가 EDT기때문)
-                if(time==0) timer.stop(); //생성이 완료되지 않았을때 stop을 하면 오류
+                if(time<=0) timer.stop(); //생성이 완료되지 않았을때 stop을 하면 오류
 //                if(time==0){ //지역변수
 //                    Timer t=(Timer) e.getSource();
 //                    t.stop();
