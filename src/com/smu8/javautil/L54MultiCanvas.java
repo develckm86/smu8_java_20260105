@@ -2,6 +2,8 @@ package com.smu8.javautil;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -11,6 +13,7 @@ class ShapeRect{
     int y=0;
     int width=50;
     int height=50;
+    double speed=1.5;
     //int r,g,b;
     Color color=Color.blue;
     public static Color createRandomColor(){
@@ -35,17 +38,56 @@ class ShapeRect{
         this.height = height;
         this.color = color;
     }
+    public void chase(Player player){
+        int dx=this.x-player.x;
+        int dy=this.y- player.y;
+        //순간이동으로 바로 따라감
+//        this.x+=dx;
+//        this.y+=dy;
+        double distance=Math.sqrt(dx*dx+dy*dy); //피타고라스 정리로 두 객체의 거리 구하기
+        double mx=dx/distance*speed;
+        double my=dy/distance*speed;
+        this.x-=mx;
+        this.y-=my;
+    }
     public void draw( Graphics g){
         g.setColor(this.color);
         g.fillRect(x,y,width,height);
     }
 }
 
+class Player{
+    int x,y;
+    int r=50;
+    int speed=20; //이동속도
+    Color color=new Color(30, 178, 180);
+    public Player(int x,int y){
+        this.x=x;
+        this.y=y;
+    }
+    //key 이벤트를 받아서 움직임을 정의 (키 이벤트의 콜백함수)
+    public void move(int keyCode){
+        //a w s d
+        switch (keyCode){
+            case KeyEvent.VK_W : y-=speed; break;
+            case KeyEvent.VK_S : y+=speed; break;
+            case KeyEvent.VK_D : x+=speed; break;
+            case KeyEvent.VK_A : x-=speed; break;
+        }
+    }
+
+    public void draw(Graphics g){
+        g.setColor(color);
+        g.fillOval(x,y,r,r);
+    }
+}
 //복수의 도형을 그리고 움직이는 그래픽 예제
 //1JFrame+JPanel(canvas)
 public class L54MultiCanvas extends JFrame {
     class MyPanel extends JPanel{
         List<ShapeRect> shapeRectList=new ArrayList<>();
+        Player player;
+        Timer chaseTime; //블럭이 플레이어를 계속 쫓아 다니는 타이머
         public MyPanel(){
             this.setBackground(new Color(100,200,100));
             ShapeRect rect=new ShapeRect(20,20,100,70,Color.PINK);
@@ -54,10 +96,28 @@ public class L54MultiCanvas extends JFrame {
             shapeRectList.add(rect);
             shapeRectList.add(rect1);
             shapeRectList.add(rect2);
+            player=new Player(215,420);
+            this.setFocusable(true);
+            this.requestFocusInWindow();
+            chaseTime=new Timer(10,(a)->{
+                for(ShapeRect shapeRect : shapeRectList){
+                    shapeRect.chase(player);
+                }
+                repaint();
+            });
+            chaseTime.start();
+            this.addKeyListener(new KeyAdapter() {
+                @Override
+                public void keyPressed(KeyEvent e) {
+                    player.move(e.getKeyCode());
+                    repaint();
+                }
+            });
         }
         @Override
         protected void paintComponent(Graphics g) {
             super.paintComponent(g);
+            player.draw(g);
             for(ShapeRect shapeRect: shapeRectList){
                 shapeRect.draw(g);
             }
