@@ -15,9 +15,9 @@ public class L52MoveCanvas extends JFrame {
         Timer moveTimer;
         public MyPanel(){
             this.setBackground(new Color(0,0,0));
-            moveTimer=new Timer(10,(e)->{
+            moveTimer=new Timer(1000,(e)->{
                 if(x<=470-50){
-                    ++x;
+                    x+=20;
                     repaint();
                 }
             });

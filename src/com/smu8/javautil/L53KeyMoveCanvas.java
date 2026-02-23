@@ -27,11 +27,14 @@ public class L53KeyMoveCanvas extends JFrame {
                 @Override
                 public void keyPressed(KeyEvent e) { //KeyEvent e 누른 키를 알수 있다.
                     switch (e.getKeyCode()){
-                        case KeyEvent.VK_S :  y+=10; repaint(); break; //s 키를 누르면
+                        case KeyEvent.VK_S :  y+=10;  break; //s 키를 누르면
+                        case KeyEvent.VK_D :  x+=10;  break; //s 키를 누르면
+                        case KeyEvent.VK_W :  y-=10;  break; //s 키를 누르면
+                        case KeyEvent.VK_A :  x-=10;  break; //s 키를 누르면
                     }
+                    repaint();
                 }
             });
-
         }
 
         @Override
