@@ -2,6 +2,7 @@ package com.smu8.ex;
 
 import java.util.Random;
 import java.util.Scanner;
+import java.util.InputMismatchException;
 
 public class E01UpDownGame {
     public static void main(String[] args) {
@@ -12,7 +13,18 @@ public class E01UpDownGame {
         System.out.println("랜덤 게임 숫자 맞추기");
         System.out.println("(hint :"+num+")");
         System.out.println("1~50 중에 숫자를 맞추세요");
-        int inputNum=scanner.nextInt(); //정수를 입력할때까지 대기 (만약 정수가 아니면 오류발생)
+
+        int inputNum;
+        while (true) {
+            try {
+                inputNum = scanner.nextInt();
+                break;
+            } catch (InputMismatchException e) {
+                System.out.println("정수만 입력해주세요.");
+                scanner.nextLine(); //잘못된 입력 비우기
+            }
+        }
+
         if(inputNum==num){
             System.out.println("정답입니다.");
         }else {
