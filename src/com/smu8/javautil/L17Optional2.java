@@ -23,7 +23,7 @@ public class L17Optional2 {
 
         /// orElseThrow : 없으면 오류! throw 오류를 생성, throws 오류처리를 위임
         // 404 : 페이지가 없다 orElseThrow 구현됨
-        Optional objOpt=Optional.empty();
+        Optional<Object> objOpt=Optional.empty();
         //Object obj=objOpt.orElseThrow(); //NoSuchElementException
         // new IllegalArgumentException;
 

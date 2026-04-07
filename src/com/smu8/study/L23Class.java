@@ -1,6 +1,7 @@
 package com.smu8.study;
 
-import java.util.Date;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class L23Class {
     public static void main(String[] args) {
@@ -11,8 +12,9 @@ public class L23Class {
         boolean b=true;
         //기본형 : 리터럴하게 표기 (보이는 그대로),소문자로 타입명시
         //자료형  : new 연산자로 생성자를 호출, 파스칼규칙(class)
-        Date date=new Date(); //new Date(); 객체(Object,Instance) => 객체의 타입이 자료형, 참조형
-        System.out.println(date.toLocaleString()); //2026. 1. 15. 오전 10:48:33
+        LocalDateTime now=LocalDateTime.now(); //객체(Object,Instance) => 객체의 타입이 자료형, 참조형
+        String nowStr=now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        System.out.println(nowStr); //2026-01-15 10:48:33
         //System.out.println(i.); //기본형은 수만 존재하는 데이터기 때문에 다른자료를 참조하지 않는다!
         //참조형 : 여러데이터를 참조하는 것
         //참조형 : 조수(식별자)만 존재
@@ -48,7 +50,6 @@ class Student{ //클래스는 파스칼 표기법
     }
 
 }
-
 
 
 

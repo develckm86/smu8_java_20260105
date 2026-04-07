@@ -2,7 +2,8 @@ package com.smu8.oop;
 
 //class Calc{} //com.smu8.oop.Calc 가 이미 존재해서 오류
 
-import java.util.Date;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Random;
 
 class Calculator{
@@ -54,11 +55,11 @@ public class L03MethodArgs {
         //c.sum(10,20,30,40,50,60)
         //c.sum(new int[]{10,200,300})x
 
-        //오늘 날짜 java.util.Date
-        java.util.Date now=new Date();
-        System.out.println(now.toString());//Fri Jan 23 10:57:50 KST 2026
-        String nowStr=now.toLocaleString(); //현재지역에 맞게 문자열로 출력
-        System.out.println(nowStr); //2026. 1. 23. 오전 10:58:50
+        //오늘 날짜 java.time.LocalDateTime
+        LocalDateTime now=LocalDateTime.now();
+        System.out.println(now);//2026-01-23T10:57:50
+        String nowStr=now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        System.out.println(nowStr); //2026-01-23 10:58:50
 
         Random random=new Random(); //랜덤수
         int num=random.nextInt();

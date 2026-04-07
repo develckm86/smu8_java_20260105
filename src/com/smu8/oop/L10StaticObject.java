@@ -2,8 +2,8 @@ package com.smu8.oop;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
-import java.util.Date;
 
 class StaticObjectTest{
     int a; //==this 에 소속 (=> 객체에 존재)
@@ -58,10 +58,10 @@ public class L10StaticObject {
         // [I@6acbcfc0 (자료형 참조형은 참조하는 데이터가 많아서 식별자(주소)로 표현)
         System.out.println(Arrays.toString(nums));
         //System.out.println(new Arrays().toString(nums));
-        Date now =new Date();
-        System.out.println(now.toLocaleString());
+        LocalDateTime now =LocalDateTime.now();
+        System.out.println(now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
         System.out.println(LocalDate.now());
-        System.out.println(LocalDateTime.now());
+        System.out.println(now);
         //2026-01-26T12:47:25.831581 : 국제표준 날짜 표기법
         System.out.println(Math.PI);
     }
