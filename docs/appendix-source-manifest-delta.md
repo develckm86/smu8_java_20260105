@@ -1,5 +1,7 @@
 # Appendix Source Manifest Delta
 
+> Learner-facing Appendix B content now lives in [Appendix B: Learner Checkpoints and Solution Guide](./appendix-b-learner-guide.md). This file remains the internal release delta for source normalization and production reference.
+
 ## Basis
 
 - Canonical executable baseline: commit `2baccef24dbcc2f20093870f622bce237c3bc0d8`
